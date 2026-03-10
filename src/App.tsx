@@ -9,7 +9,7 @@ import { HomePage } from "./pages/HomePage";
 import { AuthorisationPage } from "./pages/AuthorisationPage";
 import { AddBuild } from "./pages/AddBuild";
 
-function App() {
+const App = () => {
     const routes = createRoutesFromElements(
         <Route element={<RootLayout />} path="/">
             <Route element={<HomePage />} index />
@@ -19,6 +19,6 @@ function App() {
     );
     const router = createBrowserRouter(routes);
     return <RouterProvider router={router} />;
-}
+};
 
 export default App;
