@@ -5,9 +5,7 @@ import {
     RouterProvider,
 } from "react-router";
 import { RootLayout } from "./layout/RootLayout";
-import { HomePage } from "./pages/HomePage";
-import { AuthorisationPage } from "./pages/AuthorisationPage";
-import { AddBuild } from "./pages/AddBuild";
+import { HomePage, AuthorisationPage, AddBuild } from "./pages";
 
 const App = () => {
     const routes = createRoutesFromElements(
