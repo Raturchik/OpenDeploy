@@ -5,7 +5,24 @@
     box-sizing: border-box;
     font-family: sans-serif;
 }
+@keyframes gentleShift {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
 
+body {
+    background: linear-gradient(180deg, #4fc3ff, #ffffff, #4fc3ff);
+    background-size: 100% 200%;
+    animation: waveGradient 5s ease infinite;
+    min-height: 100vh;
+}
 ul {
     list-style-type: none;
 }

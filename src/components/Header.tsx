@@ -2,6 +2,7 @@ import { NavLink } from "react-router";
 import { IoSunnyOutline } from "react-icons/io5";
 // import { GiHamburgerMenu } from "react-icons/gi";
 import { IoEnterOutline } from "react-icons/io5";
+
 export const Header = () => {
     return (
         <header
