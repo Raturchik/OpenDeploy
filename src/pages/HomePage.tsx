@@ -1,11 +1,12 @@
+import { FaPlus } from "react-icons/fa";
 import { LuFilter, LuSearch } from "react-icons/lu";
 import { RiResetLeftFill } from "react-icons/ri";
 
 export const HomePage = () => {
     return (
         <main>
-            <div className="Filter/ADD">
-                <div className="flex">
+            <div className="flex ">
+                <div className="flex gap-10">
                     <div className="bg-[200, 60%, 98%] flex items-center gap-2 rounded-xl px-4 py-2.5">
                         <select
                             style={{ padding: "10px 15px" }}
@@ -16,7 +17,7 @@ export const HomePage = () => {
                             <option value="">Tag</option>
                         </select>
                     </div>
-                    <div className="bg-white flex flex-1 items-center gap-2 rounded-3xl px-4 py-2.5 min-w-200px max-w-md ">
+                    <div className="bg-white flex flex-1 items-center gap-2 rounded-3xl px-4 py-2.5 min-w-96 max-w-md ">
                         <LuSearch style={{ margin: "0 10px" }} />
                         <input
                             style={{ padding: "8px 10px" }}
@@ -44,7 +45,14 @@ export const HomePage = () => {
                         Reset
                     </button>
                 </div>
-                <div className="ADD"></div>
+                <div className="ADD">
+                    <button
+                        style={{ padding: "10px" }}
+                        className="bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))] flex items-center gap-2 rounded-3xl px-5 py-2.5 text-sm font-bold text-primary-foreground"
+                    >
+                        <FaPlus /> Add Build
+                    </button>
+                </div>
             </div>
         </main>
     );

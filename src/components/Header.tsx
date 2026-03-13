@@ -59,9 +59,9 @@ export const Header = () => {
                         {/* width < 1024px <GiHamburgerMenu className="h-8 w-8" /> */}
                         <button
                             style={{
-                                padding: "1em",
+                                padding: "10px",
                             }}
-                            className="bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))] flex items-center gap-2 rounded-4xl px-5 py-2.5 text-sm font-bold text-primary-foreground"
+                            className="bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))] flex items-center gap-2 rounded-3xl px-5 py-2.5 text-sm font-bold text-primary-foreground"
                         >
                             <p>
                                 <IoEnterOutline className="h-4 w-4" />{" "}
