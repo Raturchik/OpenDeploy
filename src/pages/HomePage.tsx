@@ -1,6 +1,7 @@
 import { FaPlus } from "react-icons/fa";
 import { LuFilter, LuSearch } from "react-icons/lu";
 import { RiResetLeftFill } from "react-icons/ri";
+import { Card } from "../components/Card";
 
 export const HomePage = () => {
     return (
@@ -53,6 +54,14 @@ export const HomePage = () => {
                         <FaPlus /> Add Build
                     </button>
                 </div>
+            </div>
+            <div className="">
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
             </div>
         </main>
     );
