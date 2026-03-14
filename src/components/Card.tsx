@@ -17,7 +17,7 @@ export const Card = () => {
                     Node.js
                 </span>
             </div>
-            <div className="flex">
+            <div className="flex justify-between items-center">
                 <a href="" className="flex gap-3">
                     <img src="asdf" alt="photo" />
                     Author

@@ -6,7 +6,7 @@ import { Card } from "../components/Card";
 export const HomePage = () => {
     return (
         <main>
-            <div className="container mx-auto flex ">
+            <div className="m-5 container mx-auto flex justify-between">
                 <div className="flex gap-10">
                     <div className="bg-[200, 60%, 98%] flex items-center gap-2 rounded-xl ">
                         <select className="px-3.75 py-2.5 bg-white text-sm font-semibold rounded-4xl text-foreground outline-none">
