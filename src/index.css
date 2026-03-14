@@ -22,6 +22,7 @@ body {
     background-size: 100% 200%;
     animation: waveGradient 5s ease infinite;
     min-height: 100vh;
+    background-attachment: fixed;
 }
 ul {
     list-style-type: none;
