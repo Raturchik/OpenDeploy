@@ -9,9 +9,7 @@ export const Header = () => {
             <NavLink to="/">
                 <span className="text-5xl font-black tracking-tight text-foreground">
                     Open
-                    <span className="text-[rgb(13,161,230)] sans-serif">
-                        Deploy
-                    </span>
+                    <span className="text-[rgb(13,161,230)] sans-serif">Deploy</span>
                 </span>
             </NavLink>
 
@@ -22,10 +20,12 @@ export const Header = () => {
                 </div>
 
                 {/* width < 1024px <GiHamburgerMenu className="h-8 w-8" /> */}
-                <button className="p-2.5 flex items-center gap-2 rounded-3xl text-sm font-bold text-primary-foreground">
-                    <IoEnterOutline className="h-8 w-8" />{" "}
-                    <p className="text-2xl">Login</p>
-                </button>
+                <NavLink
+                    to="auth"
+                    className="p-2.5 flex items-center gap-2 rounded-3xl text-sm font-bold text-primary-foreground"
+                >
+                    <IoEnterOutline className="h-8 w-8" /> <p className="text-2xl">Login</p>
+                </NavLink>
             </div>
         </header>
     );
