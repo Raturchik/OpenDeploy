@@ -5,7 +5,7 @@ import { IoEnterOutline } from "react-icons/io5";
 
 export const Header = () => {
     return (
-        <header className="p-5 flex justify-between items-center bg-white rounded-b-2xl">
+        <header className="sticky p-5 top-0 z-50 w-full shadow-lg flex justify-between items-center bg-white rounded-b-2xl">
             <NavLink to="/">
                 <span className="text-5xl font-black tracking-tight text-foreground">
                     Open
