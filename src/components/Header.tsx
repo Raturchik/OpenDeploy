@@ -7,7 +7,7 @@ export const Header = () => {
     return (
         <header className="sticky p-5 top-0 z-50 w-full shadow-lg flex justify-between items-center bg-white rounded-b-2xl">
             <NavLink to="/">
-                <span className="text-5xl font-black tracking-tight text-foreground">
+                <span className="text-4xl font-black tracking-tight text-foreground">
                     Open
                     <span className="text-[rgb(13,161,230)] sans-serif">Deploy</span>
                 </span>
@@ -15,7 +15,7 @@ export const Header = () => {
 
             <div className="flex items-center gap-3">
                 <div className="flex items-center">
-                    <IoSunnyOutline className="h-8 w-8 " />
+                    <IoSunnyOutline className="h-7 w-7 cursor-pointer" />
                     {/* cursor-pointer*/}
                 </div>
 
@@ -24,7 +24,7 @@ export const Header = () => {
                     to="auth"
                     className="p-2.5 flex items-center gap-2 rounded-3xl text-sm font-bold text-primary-foreground"
                 >
-                    <IoEnterOutline className="h-8 w-8" /> <p className="text-2xl">Login</p>
+                    <IoEnterOutline className="h-7 w-7" /> <p className="text-xl">Login</p>
                 </NavLink>
             </div>
         </header>
