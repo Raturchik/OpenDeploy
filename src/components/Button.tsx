@@ -6,13 +6,13 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     href?: string;
     to?: string;
     onClick?: () => void;
-    home?: string;
-    login?: string;
-    code?: string;
-    deploy?: string;
-    filter?: string;
-    reset?: string;
-    add?: string;
+    home?: boolean;
+    login?: boolean;
+    code?: boolean;
+    deploy?: boolean;
+    filter?: boolean;
+    reset?: boolean;
+    add?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
