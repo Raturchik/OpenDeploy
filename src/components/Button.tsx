@@ -86,6 +86,7 @@ export const Button: React.FC<ButtonProps> = ({
             >
                 {/* <RiResetLeftFill />
                 Reset */}
+                {children}
             </button>
         );
     }

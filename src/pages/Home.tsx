@@ -2,6 +2,7 @@ import { FaPlus } from "react-icons/fa";
 import { LuFilter, LuSearch } from "react-icons/lu";
 import { RiResetLeftFill } from "react-icons/ri";
 import { Card } from "../components/Card";
+import { Button } from "../components/Button";
 
 export const HomePage = () => {
     return (
@@ -22,24 +23,24 @@ export const HomePage = () => {
                             type="search"
                             name=""
                             id=""
-                            placeholder="PODSPOD"
+                            placeholder="Search by..."
                         />
                     </div>
 
-                    <button className="py-2 px-3.75 bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))] flex items-center gap-2 rounded-4xl  text-sm font-bold text-primary-foreground">
+                    <Button filter>
                         <LuFilter />
                         Filter
-                    </button>
+                    </Button>
 
-                    <button className="py-2 px-3.75 flex items-center gap-2 rounded-xl text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+                    <Button reset>
                         <RiResetLeftFill />
                         Reset
-                    </button>
+                    </Button>
                 </div>
                 <div className="ADD">
-                    <button className="p-2.5 bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))] flex items-center gap-2 rounded-3xl  text-sm font-bold text-primary-foreground">
+                    <Button add>
                         <FaPlus /> Add Build
-                    </button>
+                    </Button>
                 </div>
             </div>
             <div className="container mx-auto grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
