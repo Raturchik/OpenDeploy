@@ -51,10 +51,12 @@ export const Button: React.FC<ButtonProps> = ({
         );
     }
     if (href && code) {
-        <button className="px-3.75 py-1.75 bg-[rgb(51,204,107)] flex items-center gap-1.5 rounded-4xl bg-secondary text-xs font-bold text-secondary-foreground transition-all hover:shadow-md">
-            {/* <IoMdCode /> <span>Code</span> */}
-            {children}
-        </button>;
+        return (
+            <button className="px-3.75 py-1.75 bg-[rgb(51,204,107)] flex items-center gap-1.5 rounded-4xl bg-secondary text-xs font-bold text-secondary-foreground transition-all hover:shadow-md">
+                {/* <IoMdCode /> <span>Code</span> */}
+                {children}
+            </button>
+        );
     }
     if (href && deploy) {
         return (

@@ -1,5 +1,6 @@
 import { FiExternalLink } from "react-icons/fi";
 import { IoMdCode } from "react-icons/io";
+import { Button } from "./Button";
 
 export const Card = () => {
     return (
@@ -18,12 +19,12 @@ export const Card = () => {
                     Author
                 </a>
                 <div className="flex gap-2.5">
-                    <button className="px-3.75 py-1.75 bg-[rgb(51,204,107)] flex items-center gap-1.5 rounded-4xl bg-secondary text-xs font-bold text-secondary-foreground transition-all hover:shadow-md">
+                    <Button href="#" code>
                         <IoMdCode /> <span>Code</span>
-                    </button>
-                    <button className="px-3.75 py-1.75 bg-[rgb(28,167,233)] flex items-center gap-1.5 rounded-4xl text-xs font-bold text-primary-foreground ">
+                    </Button>
+                    <Button href="#1" deploy>
                         <FiExternalLink /> <span>Live</span>
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
