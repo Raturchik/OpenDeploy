@@ -52,7 +52,7 @@ export const Button: React.FC<ButtonProps> = ({
     }
     if (href && code) {
         return (
-            <button className="px-3.75 py-1.75 bg-[rgb(51,204,107)] flex items-center gap-1.5 rounded-4xl bg-secondary text-xs font-bold text-secondary-foreground transition-all hover:shadow-md">
+            <button className="px-3.75 py-1.75 bg-[rgb(51,204,107)] flex items-center gap-1.5 rounded-4xl bg-secondary text-xs font-bold text-secondary-foreground transition-all hover:shadow-md cursor-pointer">
                 {/* <IoMdCode /> <span>Code</span> */}
                 {children}
             </button>
@@ -60,7 +60,7 @@ export const Button: React.FC<ButtonProps> = ({
     }
     if (href && deploy) {
         return (
-            <button className="px-3.75 py-1.75 bg-[rgb(28,167,233)] flex items-center gap-1.5 rounded-4xl text-xs font-bold text-primary-foreground ">
+            <button className="px-3.75 py-1.75 bg-[rgb(28,167,233)] flex items-center gap-1.5 rounded-4xl text-xs font-bold text-primary-foreground hover:shadow-md cursor-pointer">
                 {/* <FiExternalLink /> <span>Live</span> */}
                 {children}
             </button>
@@ -69,7 +69,7 @@ export const Button: React.FC<ButtonProps> = ({
     if (filter) {
         return (
             <button
-                className="py-2 px-3.75 bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))] flex items-center gap-2 rounded-4xl  text-sm font-bold text-primary-foreground"
+                className="py-2 px-3.75 bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))] flex items-center gap-2 rounded-4xl  text-sm font-bold text-primary-foreground hover:shadow-md cursor-pointer"
                 onClick={onClick}
             >
                 {/* <LuFilter />
@@ -81,7 +81,7 @@ export const Button: React.FC<ButtonProps> = ({
     if (reset) {
         return (
             <button
-                className="py-2 px-3.75 flex items-center gap-2 rounded-xl text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+                className="py-2 px-3.75 flex items-center gap-2 rounded-xl text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
                 onClick={onClick}
             >
                 {/* <RiResetLeftFill />
@@ -92,7 +92,7 @@ export const Button: React.FC<ButtonProps> = ({
     }
     if (add) {
         return (
-            <button className="p-2.5 bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))] flex items-center gap-2 rounded-3xl  text-sm font-bold text-primary-foreground">
+            <button className="p-2.5 bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))] flex items-center gap-2 rounded-3xl  text-sm font-bold text-primary-foreground hover:shadow-md cursor-pointer">
                 {/* <FaPlus /> Add Build */}
                 {children}
             </button>
