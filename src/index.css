@@ -4,6 +4,9 @@
     box-sizing: border-box;
     font-family: sans-serif;
 }
+@theme {
+    --breakpoint-xs: 23.4375rem;
+}
 
 body {
     background: linear-gradient(180deg, #4fc3ff, #effaff, #74caf5);

@@ -1,19 +1,19 @@
 import { FaArrowLeft, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { NavLink } from "react-router";
+import { Button } from "../components/Button";
 
 export const AuthorisationPage = () => {
     return (
         <div className="grid h-screen place-items-center">
-            <div className="flex flex-col mx-auto max-w-100 ">
-                <NavLink
-                    to="/"
+            <div className="flex flex-col mx-auto sm:w-[50%] md:w-[45%] lg:w-[40%] xl:w-[35%] 2xl:w-[30%]">
+                <Button
+                    href="/"
                     className="flex items-center gap-2 text-[rgb(98,115,132)] mb-5 outline-none"
                 >
                     <FaArrowLeft />
                     Back to Home page
-                </NavLink>
-                <div className="bg-white rounded-3xl p-5 flex flex-col gap-7">
+                </Button>
+                <div className="bg-white rounded-3xl p-4 flex flex-col gap-7 container w-full">
                     <div className="flex flex-col text-center">
                         <span className="text-3xl font-black tracking-tight text-foreground mb-2.5">
                             Open
@@ -23,13 +23,13 @@ export const AuthorisationPage = () => {
                             Welcome back! Sign in to continue.
                         </p>
                     </div>
-                    <div className="flex justify-evenly">
-                        <button className=" bg-[rgb(13,161,230)] py-2.5 px-12.5 rounded-3xl cursor-pointer">
-                            Sign In
-                        </button>
-                        <button className="bg-white py-2.5 px-12.5 rounded-3xl cursor-pointer">
-                            Sign Up
-                        </button>
+                    <div className="flex justify-between">
+                        <Button className="bg-[rgb(13,161,230)] w-[45%] rounded-3xl cursor-pointer block">
+                            <p>Sign In</p>
+                        </Button>
+                        <Button className="bg-white py-2.5 w-[45%] rounded-3xl cursor-pointer block">
+                            <p>Sign Up</p>
+                        </Button>
                     </div>
                     <form action="" className="flex flex-col gap-3">
                         <label htmlFor="email">Email</label>
@@ -57,14 +57,14 @@ export const AuthorisationPage = () => {
                     </form>
                     <p className="text-center text-gray-400">or continue with</p>
                     <div className="flex justify-around">
-                        <button className="flex gap-2.5 items-center cursor-pointer">
+                        <Button className="flex gap-2.5 items-center cursor-pointer">
                             <FcGoogle />
                             Google
-                        </button>
-                        <button className="flex gap-2.5 items-center cursor-pointer">
+                        </Button>
+                        <Button className="flex gap-2.5 items-center cursor-pointer">
                             <FaGithub />
                             GitHub
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>

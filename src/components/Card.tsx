@@ -14,15 +14,15 @@ export const Card = () => {
                 <span className=" rounded-lg px-2.5 py-1 text-xs font-bold ">Node.js</span>
             </div>
             <div className="flex justify-between items-center">
-                <a href="" className="flex gap-3">
+                <a href="" className="flex gap-3 text-sm">
                     <img src="asdf" alt="photo" />
                     Author
                 </a>
                 <div className="flex gap-2.5">
-                    <Button href="#" code>
+                    <Button href="#" className="bg-[rgb(51,204,107)] px-2">
                         <IoMdCode /> <span>Code</span>
                     </Button>
-                    <Button href="#1" deploy>
+                    <Button href="#1" className="bg-[rgb(28,167,233)] px-2">
                         <FiExternalLink /> <span>Live</span>
                     </Button>
                 </div>
