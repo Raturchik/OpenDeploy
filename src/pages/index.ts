@@ -1,3 +1,3 @@
 export { AddBuild } from "./AddBuild";
-export { HomePage } from "./HomePage";
-export { AuthorisationPage } from "./AuthorisationPage";
+export { HomePage } from "./Home";
+export { AuthorisationPage } from "./Authorisation";

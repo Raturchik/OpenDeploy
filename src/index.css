@@ -1,10 +1,19 @@
 @import "tailwindcss";
 * {
-    margin: 0 auto;
-    padding: 0;
+    /* margin: 0 auto; */
     box-sizing: border-box;
+    font-family: sans-serif;
+}
+@theme {
+    --breakpoint-xs: 23.4375rem;
 }
 
+body {
+    background: linear-gradient(180deg, #4fc3ff, #effaff, #74caf5);
+    background-size: 100% 200%;
+    min-height: 100vh;
+    background-attachment: fixed;
+}
 ul {
     list-style-type: none;
 }
