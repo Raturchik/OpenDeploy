@@ -14,7 +14,7 @@ export const AuthorisationPage = () => {
     const [error, setError] = useState("");
     const [username, setUsername] = useState("");
 
-    function signUp(e) {
+    function signUp(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
         if (copyPassword !== password) {
             setError("Passwords didn't match");
@@ -32,7 +32,7 @@ export const AuthorisationPage = () => {
                 setError("Unexpected error ocured");
             });
     }
-    function signIn(e) {
+    function signIn(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then((user) => {
