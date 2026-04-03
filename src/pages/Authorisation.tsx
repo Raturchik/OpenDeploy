@@ -3,9 +3,49 @@ import { FcGoogle } from "react-icons/fc";
 import { Button } from "../components/Button";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { auth } from "../services/firebase/firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 export const AuthorisationPage = () => {
     const [isLogin, setIsLogin] = useState(true);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [copyPassword, setCopyPassword] = useState("");
+    const [error, setError] = useState("");
+    const [username, setUsername] = useState("");
+
+    function signUp(e) {
+        e.preventDefault();
+        if (copyPassword !== password) {
+            setError("Passwords didn't match");
+            return;
+        }
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((user) => {
+                console.log(user);
+                setError("");
+                setEmail("");
+                setPassword("");
+            })
+            .catch((error) => {
+                console.log(error);
+                setError("Unexpected error ocured");
+            });
+    }
+    function signIn(e) {
+        e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+            .then((user) => {
+                console.log(user);
+                setError("");
+                setEmail("");
+                setPassword("");
+            })
+            .catch((error) => {
+                console.log(error);
+                setError("Unexpected error ocured");
+            });
+    }
     return (
         <div className="grid h-screen place-items-center">
             <div className="flex flex-col mx-auto sm:w-[50%] md:w-[45%] lg:w-[40%] xl:w-[35%] 2xl:w-[30%]">
@@ -47,62 +87,86 @@ export const AuthorisationPage = () => {
                         </Button>
                     </div>
                     {isLogin ? (
-                        <form action="" className="flex flex-col gap-3">
+                        <form onSubmit={signIn} className="flex flex-col gap-3">
                             <label htmlFor="email">Email</label>
                             <input
                                 type="email"
                                 name=""
                                 id="email"
+                                value={email}
                                 placeholder="you@example.com"
                                 className="outline-none p-3.5 shadow-xl rounded-3xl border border-border/50 border-gray-200 focus:border-2 focus:border-blue-600"
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <label htmlFor="password">Password</label>
                             <input
                                 type="password"
                                 name=""
                                 id="password"
+                                value={password}
                                 placeholder="••••••••"
                                 className="outline-none p-3.5 shadow-xl rounded-3xl border border-border/50 border-gray-200 focus:border-2 focus:border-blue-600"
+                                onChange={(e) => setPassword(e.target.value)}
                             />
+
                             <button
                                 type="submit"
                                 className="bg-[rgb(13,161,230)] rounded-3xl p-2.5 cursor-pointer"
+                                onSubmit={() => signIn}
                             >
                                 <p className="text-white text-lg font-bold">Sign In</p>
                             </button>
                         </form>
                     ) : (
-                        <form action="" className="flex flex-col gap-3">
+                        <form onSubmit={signUp} className="flex flex-col gap-3">
                             <label htmlFor="email">Username</label>
                             <input
                                 type="text"
                                 name=""
                                 id="username"
+                                value={username}
                                 placeholder="your_username"
                                 className="outline-none p-3.5 shadow-xl rounded-3xl border border-border/50 border-gray-200 focus:border-2 focus:border-blue-600"
+                                onChange={(e) => setUsername(e.target.value)}
                             />
                             <label htmlFor="email">Email</label>
                             <input
                                 type="email"
                                 name=""
                                 id="email"
+                                value={email}
                                 placeholder="you@example.com"
                                 className="outline-none p-3.5 shadow-xl rounded-3xl border border-border/50 border-gray-200 focus:border-2 focus:border-blue-600"
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <label htmlFor="password">Password</label>
                             <input
                                 type="password"
                                 name=""
                                 id="password"
+                                value={password}
                                 placeholder="••••••••"
-                                className="outline-none p-3.5 shadow-xl rounded-3xl roundedborder border-border/50 border-gray-200 -3xl border-2 focus:border-blue-600"
+                                className="outline-none p-3.5 shadow-xl rounded-3xl border border-border/50 border-gray-200 focus:border-2 focus:border-blue-600"
+                                onChange={(e) => setPassword(e.target.value)}
                             />
+                            <label htmlFor="password">Re-enter your password</label>
+                            <input
+                                type="password"
+                                name=""
+                                id="password"
+                                value={copyPassword}
+                                placeholder="••••••••"
+                                className="outline-none p-3.5 shadow-xl rounded-3xl border border-border/50 border-gray-200 focus:border-2 focus:border-blue-600"
+                                onChange={(e) => setCopyPassword(e.target.value)}
+                            />
+
                             <button
                                 type="submit"
                                 className="bg-[rgb(13,161,230)] rounded-3xl p-2.5 cursor-pointer shadow-2xl"
                             >
                                 <p className="text-white text-lg font-bold">Sign Up</p>
                             </button>
+                            {error ? <p>{error}</p> : ""}
                         </form>
                     )}
                     <p className="text-center text-gray-400">or continue with</p>
