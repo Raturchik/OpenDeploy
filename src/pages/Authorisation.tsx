@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Button } from "../components/Button";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { auth } from "../services/firebase/firebase";
+import { auth, signInWithGooglePopup } from "../services/firebase/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
@@ -58,6 +58,15 @@ export const AuthorisationPage = () => {
             });
     }
 
+    async function signInWithGoogle() {
+        try {
+            const responce = signInWithGooglePopup();
+            console.log(responce);
+            navigate("/");
+        } catch {
+            console.log("Unexpected error ocured");
+        }
+    }
     const onSubmit: SubmitHandler<FormData> = (data) => {
         if (isLogin) {
             signIn(data);
@@ -207,7 +216,10 @@ export const AuthorisationPage = () => {
                     )}
                     <p className="text-center text-gray-400">or continue with</p>
                     <div className="flex justify-around">
-                        <Button className="flex gap-2.5 items-center cursor-pointer px-5 sm:px-9 md:px-10 lg:px-14 xl:px-17 py-3 border border-border/50 border-gray-200">
+                        <Button
+                            onClick={signInWithGoogle}
+                            className="flex gap-2.5 items-center cursor-pointer px-5 sm:px-9 md:px-10 lg:px-14 xl:px-17 py-3 border border-border/50 border-gray-200"
+                        >
                             <FcGoogle />
                             <p className="text-sm">Google</p>
                         </Button>
