@@ -3,8 +3,12 @@ import { FcGoogle } from "react-icons/fc";
 import { Button } from "../components/Button";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { auth, signInWithGooglePopup } from "../services/firebase/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth, githubProvider, signInWithGooglePopup } from "../services/firebase/firebase";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+} from "firebase/auth";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 
@@ -62,11 +66,24 @@ export const AuthorisationPage = () => {
         try {
             const responce = signInWithGooglePopup();
             console.log(responce);
-            navigate("/");
-        } catch {
+            await navigate("/");
+        } catch (error) {
+            console.error(error);
             console.log("Unexpected error ocured");
         }
     }
+
+    const signInWithGitHub = async () => {
+        try {
+            const responce = await signInWithPopup(auth, githubProvider);
+            console.log(responce);
+            navigate("/");
+        } catch (error) {
+            console.error(error);
+            setError("Unexpected error ocured");
+        }
+    };
+
     const onSubmit: SubmitHandler<FormData> = (data) => {
         if (isLogin) {
             signIn(data);
@@ -223,7 +240,10 @@ export const AuthorisationPage = () => {
                             <FcGoogle />
                             <p className="text-sm">Google</p>
                         </Button>
-                        <Button className="flex gap-2.5 items-center cursor-pointer px-5 sm:px-9 md:px-10 lg:px-14 xl:px-17 py-3 border border-border/50 border-gray-200">
+                        <Button
+                            onClick={signInWithGitHub}
+                            className="flex gap-2.5 items-center cursor-pointer px-5 sm:px-9 md:px-10 lg:px-14 xl:px-17 py-3 border border-border/50 border-gray-200"
+                        >
                             <FaGithub />
                             <p className="text-sm">GitHub</p>
                         </Button>
