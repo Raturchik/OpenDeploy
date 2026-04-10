@@ -6,6 +6,6 @@ interface AppContextProps {
     children: ReactNode;
 }
 
-export default function AppContext({ children }: AppContextProps) {
+export function AppContext({ children }: AppContextProps) {
     return <ContextProvider.Provider value={null}>{children}</ContextProvider.Provider>;
 }
