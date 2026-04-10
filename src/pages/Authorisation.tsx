@@ -1,7 +1,7 @@
 import { FaArrowLeft, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "../components/Button";
-import { useState } from "react";
+import { useContext } from "react";
 import { twMerge } from "tailwind-merge";
 import { auth, githubProvider, signInWithGooglePopup } from "../services/firebase/firebase";
 import {
@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { ContextProvider } from "../context/AppContextCore";
 
 type FormData = {
     email: string;
@@ -20,8 +21,13 @@ type FormData = {
 };
 
 export const AuthorisationPage = () => {
-    const [isLogin, setIsLogin] = useState(true);
-    const [error, setError] = useState("");
+    const context = useContext(ContextProvider);
+
+    if (!context) {
+        throw new Error("AuthorisationPage must be used within AppContextProvider");
+    }
+
+    const { isLogin, setIsLogin, error, setError } = context;
 
     const navigate = useNavigate();
     const {

@@ -1,11 +1,17 @@
-import { createContext, type ReactNode } from "react";
-
-const ContextProvider = createContext(null);
+import { useState, type ReactNode } from "react";
+import { ContextProvider } from "./AppContextCore";
 
 interface AppContextProps {
     children: ReactNode;
 }
 
-export function AppContext({ children }: AppContextProps) {
-    return <ContextProvider.Provider value={null}>{children}</ContextProvider.Provider>;
+export function AppContextProvider({ children }: AppContextProps) {
+    const [isLogin, setIsLogin] = useState(true);
+    const [error, setError] = useState("");
+
+    return (
+        <ContextProvider.Provider value={{ error, setError, isLogin, setIsLogin }}>
+            {children}
+        </ContextProvider.Provider>
+    );
 }
