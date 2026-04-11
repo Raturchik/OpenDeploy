@@ -1,19 +1,19 @@
-import { IoSunnyOutline } from "react-icons/io5";
+import { IoSunnyOutline, IoEnterOutline } from "react-icons/io5";
 // import { GiHamburgerMenu } from "react-icons/gi";
-import { IoEnterOutline } from "react-icons/io5";
 import { Button } from "./Button";
 import { IoIosLogOut } from "react-icons/io";
 import { useContext } from "react";
-import { ContextProvider } from "../context/AppContextCore";
+import { AuthorizationContext } from "../context/AuthorizationContext";
 
 export const Header = () => {
-    const context = useContext(ContextProvider);
+    const context = useContext(AuthorizationContext);
 
     if (!context) {
         throw new Error("AuthorisationPage must be used within AppContextProvider");
     }
 
-    const { isLogin } = context;
+    const { isLogin, setIsLogin, logout } = context;
+
     return (
         <header className="sticky top-0 z-50 w-full shadow-lg flex justify-between items-center bg-white rounded-b-2xl px-2 py-4 mb-7.5">
             <Button href="/" className="">
@@ -31,7 +31,7 @@ export const Header = () => {
                 {/* width < 1024px <GiHamburgerMenu className="h-8 w-8" /> */}
                 {isLogin ? (
                     <Button
-                        href="auth"
+                        onClick={logout}
                         className="p-2.5 flex items-center gap-2 rounded-3xl text-sm font-bold text-primary-foreground"
                     >
                         <IoIosLogOut className="h-7 w-7" />
