@@ -23,6 +23,7 @@ type FormData = {
 export function AuthorizationContextProvider({ children }: AppContextProps) {
     const [isLogin, setIsLogin] = useState(() => Boolean(auth.currentUser?.uid));
     const [error, setError] = useState("");
+    const [repo, setRepo] = useState(null);
 
     const navigate = useNavigate();
 
@@ -104,6 +105,8 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
         }
     };
     const value = {
+        repo,
+        setRepo,
         error,
         setError,
         isLogin,

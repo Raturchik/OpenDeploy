@@ -1,7 +1,8 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "../components/Button";
-import { useState } from "react";
 import REST_API_URL from "../RESTAPI";
+import { useContext } from "react";
+import { AuthorizationContext } from "../context/AuthorizationContext";
 
 type FormData = {
     user: string;
@@ -9,7 +10,9 @@ type FormData = {
 };
 
 export const AddBuild = () => {
-    const [repo, setRepo] = useState(null);
+    const context = useContext(AuthorizationContext);
+    const { repo, setRepo } = context;
+
     const {
         register,
         handleSubmit,

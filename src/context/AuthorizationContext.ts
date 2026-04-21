@@ -2,6 +2,8 @@ import type { User } from "firebase/auth";
 import { createContext } from "react";
 
 interface AppContextType {
+    repo: object;
+    setRepo: (value: object) => void;
     isLogin: boolean;
     setIsLogin: (value: boolean) => void;
     error: string;
