@@ -1,17 +1,10 @@
 import { FaArrowLeft, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "../components/Button";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { auth, githubProvider, signInWithGooglePopup } from "../services/firebase/firebase";
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-} from "firebase/auth";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { ContextProvider } from "../context/AppContextCore";
+import { AuthorizationContext } from "../context/AuthorizationContext";
 
 type FormData = {
     email: string;
@@ -21,83 +14,35 @@ type FormData = {
 };
 
 export const AuthorisationPage = () => {
-    const context = useContext(ContextProvider);
+    const context = useContext(AuthorizationContext);
+    const [isLogin, setIsLogin] = useState(true);
 
     if (!context) {
         throw new Error("AuthorisationPage must be used within AppContextProvider");
     }
 
-    const { isLogin, setIsLogin, error, setError } = context;
-
-    const navigate = useNavigate();
+    const {
+        signInWithCredentials,
+        signUpWithCredentials,
+        error,
+        signInWithGoogle,
+        signInWithGitHub,
+    } = context;
     const {
         register,
         handleSubmit,
         formState: { errors },
-        reset,
     } = useForm<FormData>();
-
-    function signUp(userData: FormData): void {
-        if (userData.password !== userData.copyPassword) {
-            setError("Your passwords do not match.");
-            return;
-        }
-        createUserWithEmailAndPassword(auth, userData.email, userData.password)
-            .then((user) => {
-                console.log(user);
-                setError("");
-                reset();
-                navigate("/");
-            })
-            .catch((error) => {
-                console.log(error);
-                setError("Unexpected error ocured");
-            });
-    }
-    function signIn(userData: FormData) {
-        signInWithEmailAndPassword(auth, userData.email, userData.password)
-            .then((user) => {
-                console.log(user);
-                setError("");
-                reset();
-                navigate("/");
-            })
-            .catch((error) => {
-                console.log(error);
-                setError("Unexpected error ocured");
-            });
-    }
-
-    async function signInWithGoogle() {
-        try {
-            const responce = signInWithGooglePopup();
-            console.log(responce);
-            await navigate("/");
-        } catch (error) {
-            console.error(error);
-            console.log("Unexpected error ocured");
-        }
-    }
-
-    const signInWithGitHub = async () => {
-        try {
-            const responce = await signInWithPopup(auth, githubProvider);
-            console.log(responce);
-            navigate("/");
-        } catch (error) {
-            console.error(error);
-            setError("Unexpected error ocured");
-        }
-    };
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         if (isLogin) {
-            signIn(data);
+            signInWithCredentials(data);
         } else {
-            signUp(data);
+            signUpWithCredentials(data);
         }
         console.log(data);
     };
+
     return (
         <div className="grid h-screen place-items-center">
             <div className="flex flex-col mx-auto sm:w-[50%] md:w-[45%] lg:w-[40%] xl:w-[35%] 2xl:w-[30%]">
