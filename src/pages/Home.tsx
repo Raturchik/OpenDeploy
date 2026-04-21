@@ -35,7 +35,10 @@ export const HomePage = () => {
                     <RiResetLeftFill />
                     <p className="hidden text- sm:block">Reset</p>
                 </Button>
-                <Button className="py-3 px-2.5 rounded-3xl  hover:shadow-md bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))]">
+                <Button
+                    href="add"
+                    className="py-3 px-2.5 rounded-3xl  hover:shadow-md bg-[linear-gradient(180deg,hsl(199,89%,48%,0.9),hsl(199,89%,48%))]"
+                >
                     <FaPlus /> <p className="hidden sm:block">Add Build</p>
                 </Button>
             </div>

@@ -4,7 +4,6 @@ import { Button } from "../components/Button";
 import { useContext } from "react";
 import { twMerge } from "tailwind-merge";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { AuthorizationContext } from "../context/AuthorizationContext";
 
 type FormData = {

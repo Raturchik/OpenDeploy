@@ -14,7 +14,6 @@ export const PrivateRoute = () => {
         return () => unsubscribe();
     }, []);
 
-    console.log(user);
-
+    return <Outlet></Outlet>;
     return user?.uid ? <Outlet /> : <Navigate to="auth" replace />;
 };
