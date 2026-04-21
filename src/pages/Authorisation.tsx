@@ -1,10 +1,9 @@
 import { FaArrowLeft, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "../components/Button";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { AuthorizationContext } from "../context/AuthorizationContext";
 
 type FormData = {
@@ -16,22 +15,19 @@ type FormData = {
 
 export const AuthorisationPage = () => {
     const context = useContext(AuthorizationContext);
+    const [isLogin, setIsLogin] = useState(true);
 
     if (!context) {
         throw new Error("AuthorisationPage must be used within AppContextProvider");
     }
 
     const {
-        isLogin,
-        setIsLogin,
-        error,
-        setError,
-        signUpWithCredentials,
         signInWithCredentials,
-        signInWithGitHub,
+        signUpWithCredentials,
+        error,
         signInWithGoogle,
+        signInWithGitHub,
     } = context;
-
     const {
         register,
         handleSubmit,
