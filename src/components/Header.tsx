@@ -12,7 +12,7 @@ export const Header = () => {
         throw new Error("AuthorisationPage must be used within AppContextProvider");
     }
 
-    const { isLogin, setIsLogin, logout } = context;
+    const { user, logout } = context;
 
     return (
         <header className="sticky top-0 z-50 w-full shadow-lg flex justify-between items-center bg-white rounded-b-2xl px-2 py-4 mb-7.5">
@@ -29,7 +29,7 @@ export const Header = () => {
                 </div>
 
                 {/* width < 1024px <GiHamburgerMenu className="h-8 w-8" /> */}
-                {isLogin ? (
+                {user ? (
                     <Button
                         onClick={logout}
                         className="p-2.5 flex items-center gap-2 rounded-3xl text-sm font-bold text-primary-foreground"

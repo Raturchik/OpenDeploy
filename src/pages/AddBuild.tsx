@@ -11,6 +11,11 @@ type FormData = {
 
 export const AddBuild = () => {
     const context = useContext(AuthorizationContext);
+
+    if (!context) {
+        throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
+    }
+
     const { repo, setRepo } = context;
 
     const {
@@ -26,7 +31,16 @@ export const AddBuild = () => {
         fetch(REST_API_URL + `${user}/${repoName}`)
             .then((response) => response.json())
             .then((data) => {
-                setRepo(data);
+                const cardData = {
+                    name: data.name,
+                    description: data.description,
+                    avatar: data.owner.avatar_url,
+                    userName: data.owner.login,
+                    language: data.language,
+                    link: data.git_url,
+                };
+                setRepo(cardData);
+                console.log(data);
             })
             .catch((error) => console.error("Ошибка:", error));
     };

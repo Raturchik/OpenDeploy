@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router";
-import { onAuthStateChanged, type User } from "firebase/auth";
-import { auth } from "../services/firebase/firebase";
+import { AuthorizationContext } from "../context/AuthorizationContext";
 
 export const PrivateRoute = () => {
-    const [user, setUser] = useState<User | null>(null);
+    const context = useContext(AuthorizationContext);
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            console.log(user);
-            setUser(user);
-        });
-        return () => unsubscribe();
-    }, []);
+    if (!context) {
+        throw new Error("PrivateRoute must be used within AuthorizationContextProvider");
+    }
+    const { user, isAuthReady } = context;
 
-    return <Outlet></Outlet>;
-    return user?.uid ? <Outlet /> : <Navigate to="auth" replace />;
+    if (!isAuthReady) {
+        return (
+            <main className="mx-auto w-[90%] h-[calc(100vh-200px)] flex items-center justify-center">
+                <p>Loading...</p>
+            </main>
+        );
+    }
+
+    return user?.uid ? <Outlet /> : <Navigate to="/auth" replace />;
 };

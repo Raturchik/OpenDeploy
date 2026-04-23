@@ -1,10 +1,16 @@
-import { useState, type ReactNode } from "react";
-import { AuthorizationContext } from "./AuthorizationContext";
+import { useState, type ReactNode, useEffect } from "react";
+import {
+    AuthorizationContext,
+    type AuthCredentials,
+    type repoDataType,
+} from "./AuthorizationContext";
 import {
     createUserWithEmailAndPassword,
+    onAuthStateChanged,
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
+    type User,
 } from "firebase/auth";
 import { auth, githubProvider, signInWithGooglePopup } from "../services/firebase/firebase";
 import { useNavigate } from "react-router";
@@ -13,32 +19,32 @@ interface AppContextProps {
     children: ReactNode;
 }
 
-type FormData = {
-    email: string;
-    password: string;
-    username: string;
-    copyPassword: string;
-};
-
 export function AuthorizationContextProvider({ children }: AppContextProps) {
-    const [isLogin, setIsLogin] = useState(() => Boolean(auth.currentUser?.uid));
+    const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState("");
-    const [repo, setRepo] = useState(null);
+    const [isAuthReady, setIsAuthReady] = useState(false);
+    const [repo, setRepo] = useState<repoDataType | null>(null);
 
     const navigate = useNavigate();
 
-    function signUpWithCredentials(userData: FormData): void {
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setUser(user);
+            setIsAuthReady(true);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    function signUpWithCredentials(userData: AuthCredentials): void {
         if (userData.password !== userData.copyPassword) {
             setError("Your passwords do not match.");
             return;
         }
         createUserWithEmailAndPassword(auth, userData.email, userData.password)
             .then((user) => {
-                console.log(user);
                 setError("");
-                console.log(user);
                 if (user.user) {
-                    setIsLogin(true);
+                    setUser(user.user);
                 }
                 navigate("/");
             })
@@ -47,15 +53,14 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
                 setError("Unexpected error ocured");
             });
     }
-    function signInWithCredentials(userData: FormData) {
+
+    function signInWithCredentials(userData: AuthCredentials) {
         signInWithEmailAndPassword(auth, userData.email, userData.password)
             .then((user) => {
-                console.log(user);
                 setError("");
 
-                console.log(user);
                 if (user.user) {
-                    setIsLogin(true);
+                    setUser(user.user);
                 }
 
                 navigate("/");
@@ -69,9 +74,8 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     async function signInWithGoogle() {
         try {
             const responce = await signInWithGooglePopup();
-            console.log(responce);
             if (responce.user) {
-                setIsLogin(true);
+                setUser(responce.user);
             }
         } catch (error) {
             console.error(error);
@@ -83,9 +87,8 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     const signInWithGitHub = async () => {
         try {
             const responce = await signInWithPopup(auth, githubProvider);
-            console.log(responce);
             if (responce.user) {
-                setIsLogin(true);
+                setUser(responce.user);
             }
             navigate("/");
         } catch (error) {
@@ -95,22 +98,23 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     };
 
     const logout = async () => {
-        console.log("Выход выполнен успешно");
         try {
             await signOut(auth);
-            setIsLogin(false);
-            navigate("auth"); // Перенаправление на страницу входа
+            setUser(null);
+            navigate("/auth");
         } catch (error) {
             console.error("Ошибка при выходе:", error);
         }
     };
+
     const value = {
         repo,
         setRepo,
         error,
         setError,
-        isLogin,
-        setIsLogin,
+        isAuthReady,
+        user,
+        setUser,
         signUpWithCredentials,
         signInWithCredentials,
         signInWithGoogle,
