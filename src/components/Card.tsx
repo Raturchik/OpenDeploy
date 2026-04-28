@@ -2,31 +2,25 @@ import { FiExternalLink } from "react-icons/fi";
 import { IoMdCode } from "react-icons/io";
 import { Button } from "./Button";
 import { useContext } from "react";
-import { AuthorizationContext } from "../context/AuthorizationContext";
-
-export const Card = () => {
+import { AuthorizationContext, type repoDataType } from "../context/AuthorizationContext";
+interface CardProps {
+    repo: repoDataType;
+}
+export const Card: React.FC<CardProps> = ({ repo }) => {
     const context = useContext(AuthorizationContext);
 
     if (!context) {
         throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
 
-    const { repo } = context;
-
-    if (repo === null) {
-        return null;
-    }
-    console.log(typeof repo.avatar);
-
     return (
         <div className="p-3.75 bg-white rounded-3xl shadow-sm transform transition-all duration-400 ease-in-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg">
             <h3 className="text-lg font-extrabold text-foreground">{repo.name}</h3>
             <p className="mt-1 line-clamp-2 text-sm text-muted-foreground text-gray-400">
-                {repo.description}
+                {repo.description ? repo.description : "no description"}
             </p>
-            <div className="mt-3 flex flex-wrap gap-1.5">
-                <span className="rounded-lg px-2.5 py-1 text-xs font-bold ">react.js</span>
-                <span className=" rounded-lg px-2.5 py-1 text-xs font-bold ">Node.js</span>
+            <div className="mt-3 flex flex-wrap gap-1.5 ">
+                <span className="rounded-lg px-2.5 py-1 text-xs font-bold ">{repo.language}</span>
             </div>
             <div className="flex justify-between ">
                 <a href="" className="flex gap-3 text-sm items-center">

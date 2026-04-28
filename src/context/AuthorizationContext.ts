@@ -15,9 +15,21 @@ export type repoDataType = {
     language: string;
     link: string;
 };
+export interface GitHubRepoItem {
+    name: string;
+    description: string | null;
+    owner: {
+        avatar_url: string;
+        login: string;
+    };
+    language: string | null;
+    html_url: string;
+}
 interface AppContextType {
     repo: repoDataType | null;
     setRepo: (value: repoDataType | null) => void;
+    reposArray: repoDataType[];
+    setReposArray: (value: repoDataType[]) => void;
     error: string;
     setError: (value: string) => void;
     isAuthReady: boolean;

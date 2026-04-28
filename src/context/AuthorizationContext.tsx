@@ -24,6 +24,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     const [error, setError] = useState("");
     const [isAuthReady, setIsAuthReady] = useState(false);
     const [repo, setRepo] = useState<repoDataType | null>(null);
+    const [reposArray, setReposArray] = useState<repoDataType[]>([]);
 
     const navigate = useNavigate();
 
@@ -110,6 +111,8 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     const value = {
         repo,
         setRepo,
+        reposArray,
+        setReposArray,
         error,
         setError,
         isAuthReady,
