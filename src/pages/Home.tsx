@@ -3,7 +3,7 @@ import { LuFilter, LuSearch } from "react-icons/lu";
 import { RiResetLeftFill } from "react-icons/ri";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthorizationContext, type GitHubRepoItem } from "../context/AuthorizationContext";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
@@ -26,6 +26,41 @@ export const HomePage = () => {
         formState: { errors },
     } = useForm<DataFormType>();
 
+    useEffect(() => {
+        fetch(
+            "https://api.github.com/search/repositories?q=stars:>1&sort=stars&order=desc&per_page=10",
+            {
+                headers: {
+                    Authorization: `Bearer ___`, //<- insert token here later
+                    Accept: "application/vnd.github+json",
+                },
+            },
+        )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Ошибка HTTP: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+
+                const dataArray = data.items;
+
+                const repos = dataArray.map((item: GitHubRepoItem) => ({
+                    name: item.name,
+                    description: item.description,
+                    avatar: item.owner.avatar_url,
+                    userName: item.owner.login,
+                    userLink: item.owner.html_url,
+                    language: item.language,
+                    link: item.html_url,
+                }));
+                setReposArray(repos);
+            })
+            .catch((err) => console.error(err));
+    }, []);
+
     const onSubmit: SubmitHandler<DataFormType> = (formData) => {
         console.log(formData);
 
@@ -47,6 +82,7 @@ export const HomePage = () => {
             })
             .catch((error) => console.error("Ошибка:", error));
     };
+
     console.log(reposArray);
 
     return (

@@ -13,6 +13,7 @@ export type repoDataType = {
     avatar: string;
     userName: string;
     language: string;
+    userLink: string;
     link: string;
 };
 export interface GitHubRepoItem {
@@ -21,6 +22,7 @@ export interface GitHubRepoItem {
     owner: {
         avatar_url: string;
         login: string;
+        html_url: string;
     };
     language: string | null;
     html_url: string;
