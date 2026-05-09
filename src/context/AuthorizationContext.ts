@@ -8,6 +8,7 @@ export type AuthCredentials = {
     copyPassword: string;
 };
 export type repoDataType = {
+    id: number;
     name: string;
     description: string;
     avatar: string;
@@ -15,6 +16,10 @@ export type repoDataType = {
     language: string;
     userLink: string;
     link: string;
+    date: string;
+    stars: number;
+    views: number;
+    topics: string[];
 };
 export interface GitHubRepoItem {
     name: string;
@@ -24,8 +29,13 @@ export interface GitHubRepoItem {
         login: string;
         html_url: string;
     };
+    created_at: string;
+    topics: string[];
+    stargazers_count: number;
+    watchers_count: number;
     language: string | null;
     html_url: string;
+    id: number;
 }
 interface AppContextType {
     repo: repoDataType | null;

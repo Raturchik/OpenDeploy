@@ -3,7 +3,7 @@ import { LuFilter, LuSearch } from "react-icons/lu";
 import { RiResetLeftFill } from "react-icons/ri";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthorizationContext, type GitHubRepoItem } from "../context/AuthorizationContext";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
@@ -13,7 +13,7 @@ interface DataFormType extends FormData {
 
 export const HomePage = () => {
     const context = useContext(AuthorizationContext);
-
+    const [loaded, setLoaded] = useState(false);
     if (!context) {
         throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
@@ -26,40 +26,52 @@ export const HomePage = () => {
         formState: { errors },
     } = useForm<DataFormType>();
 
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
+
     useEffect(() => {
-        fetch(
-            "https://api.github.com/search/repositories?q=stars:>1&sort=stars&order=desc&per_page=10",
-            {
-                headers: {
-                    Authorization: `Bearer ___`, //<- insert token here later
-                    Accept: "application/vnd.github+json",
+        if (!loaded) {
+            fetch(
+                "https://api.github.com/search/repositories?q=stars:>1&sort=stars&order=desc&per_page=10",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, //<- insert token here later
+                        Accept: "application/vnd.github+json",
+                    },
                 },
-            },
-        )
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Ошибка HTTP: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`Ошибка HTTP: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data);
 
-                const dataArray = data.items;
+                    const dataArray = data.items;
 
-                const repos = dataArray.map((item: GitHubRepoItem) => ({
-                    name: item.name,
-                    description: item.description,
-                    avatar: item.owner.avatar_url,
-                    userName: item.owner.login,
-                    userLink: item.owner.html_url,
-                    language: item.language,
-                    link: item.html_url,
-                }));
-                setReposArray(repos);
-            })
-            .catch((err) => console.error(err));
-    }, []);
+                    const repos = dataArray.map((item: GitHubRepoItem) => ({
+                        id: item.id,
+                        name: item.name,
+                        description: item.description,
+                        avatar: item.owner.avatar_url,
+                        userName: item.owner.login,
+                        userLink: item.owner.html_url,
+                        date: item.created_at,
+                        stars: item.stargazers_count,
+                        views: item.watchers_count,
+                        topics: item.topics,
+                        language: item.language,
+                        link: item.html_url,
+                    }));
+                    setReposArray(repos);
+                    setLoaded(true);
+                })
+                .catch((err) => console.error(err));
+        } else {
+            return;
+        }
+    }, [token, setReposArray, loaded]);
 
     const onSubmit: SubmitHandler<DataFormType> = (formData) => {
         console.log(formData);
@@ -67,13 +79,21 @@ export const HomePage = () => {
         fetch(`/api.github.com/search/repositories?q=${formData.formData}`)
             .then((response) => response.json())
             .then((data) => {
+                console.log(data.items[0].id);
+
                 const dataArray = data.items;
 
                 const repos = dataArray.map((item: GitHubRepoItem) => ({
+                    id: item.id,
                     name: item.name,
                     description: item.description,
                     avatar: item.owner.avatar_url,
                     userName: item.owner.login,
+                    userLink: item.owner.html_url,
+                    date: item.created_at,
+                    stars: item.stargazers_count,
+                    views: item.watchers_count,
+                    topics: item.topics,
                     language: item.language,
                     link: item.html_url,
                 }));
@@ -130,8 +150,8 @@ export const HomePage = () => {
             </div>
 
             <div className="container mx-auto grid gap-5 max-w-[90%] md:grid-cols-2 lg:grid-cols-3">
-                {reposArray.map((item) => {
-                    return <Card repo={item} />;
+                {reposArray.map((item, index) => {
+                    return <Card repo={item} key={index} />;
                 })}
             </div>
         </main>
