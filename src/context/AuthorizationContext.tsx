@@ -2,6 +2,7 @@ import { useState, type ReactNode, useEffect } from "react";
 import {
     AuthorizationContext,
     type AuthCredentials,
+    type GitHubRepoItem,
     type repoDataType,
 } from "./AuthorizationContext";
 import {
@@ -23,10 +24,11 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState("");
     const [isAuthReady, setIsAuthReady] = useState(false);
-    const [repo, setRepo] = useState<repoDataType | null>(null);
-    const [reposArray, setReposArray] = useState<repoDataType[]>([]);
+    const [searchItem, setSearchItem] = useState("");
 
     const navigate = useNavigate();
+
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -72,7 +74,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
             });
     }
 
-    async function signInWithGoogle() {
+    const signInWithGoogle = async () => {
         try {
             const responce = await signInWithGooglePopup();
             if (responce.user) {
@@ -83,7 +85,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
             console.log("Unexpected error ocured");
         }
         await navigate("/");
-    }
+    };
 
     const signInWithGitHub = async () => {
         try {
@@ -108,12 +110,73 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
         }
     };
 
+    const fetchPopularRepo = async (): Promise<repoDataType[] | undefined> => {
+        try {
+            const response = await fetch(
+                "https://api.github.com/search/repositories?q=stars:>1&sort=stars&order=desc&per_page=10",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, //<- insert token here later
+                        Accept: "application/vnd.github+json",
+                    },
+                },
+            );
+
+            if (!response.ok) {
+                throw new Error(`Ошибка HTTP: ${response.status}`);
+            }
+            const data = await response.json();
+
+            return data.items.map((item: GitHubRepoItem) => ({
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                avatar: item.owner.avatar_url,
+                userName: item.owner.login,
+                userLink: item.owner.html_url,
+                date: item.created_at,
+                stars: item.stargazers_count,
+                views: item.watchers_count,
+                topics: item.topics,
+                language: item.language,
+                link: item.html_url,
+            }));
+        } catch (err) {
+            console.error(err);
+            return [];
+        }
+    };
+
+    const fetchRepos = async (searchTerm: string): Promise<repoDataType[] | undefined> => {
+        if (!searchTerm) return [];
+
+        const response = await fetch(`https://api.github.com/search/repositories?q=${searchTerm}`);
+
+        if (!response.ok) throw new Error("Ошибка при загрузке");
+
+        const data = await response.json();
+
+        return data.items.map((item: GitHubRepoItem) => ({
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            avatar: item.owner.avatar_url,
+            userName: item.owner.login,
+            userLink: item.owner.html_url,
+            date: item.created_at,
+            stars: item.stargazers_count,
+            views: item.watchers_count,
+            topics: item.topics,
+            language: item.language,
+            link: item.html_url,
+        }));
+    };
     const value = {
-        repo,
-        setRepo,
-        reposArray,
-        setReposArray,
+        searchItem,
+        setSearchItem,
         error,
+        fetchPopularRepo,
+        fetchRepos,
         setError,
         isAuthReady,
         user,

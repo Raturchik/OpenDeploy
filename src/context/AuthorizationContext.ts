@@ -38,10 +38,8 @@ export interface GitHubRepoItem {
     id: number;
 }
 interface AppContextType {
-    repo: repoDataType | null;
-    setRepo: (value: repoDataType | null) => void;
-    reposArray: repoDataType[];
-    setReposArray: (value: repoDataType[]) => void;
+    searchItem: string;
+    setSearchItem: (value: string) => void;
     error: string;
     setError: (value: string) => void;
     isAuthReady: boolean;
@@ -49,9 +47,11 @@ interface AppContextType {
     setUser: (value: User | null) => void;
     signUpWithCredentials: (userData: AuthCredentials) => void;
     signInWithCredentials: (userData: AuthCredentials) => void;
-    signInWithGoogle: () => void;
-    signInWithGitHub: () => void;
-    logout: () => void;
+    signInWithGoogle: () => Promise<void>;
+    signInWithGitHub: () => Promise<void>;
+    logout: () => Promise<void>;
+    fetchPopularRepo: () => Promise<repoDataType[] | undefined>;
+    fetchRepos: (value: string) => Promise<repoDataType[] | undefined>;
 }
 
 export const AuthorizationContext = createContext<AppContextType | null>(null);

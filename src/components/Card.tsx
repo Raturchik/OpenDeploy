@@ -13,7 +13,6 @@ export const Card: React.FC<CardProps> = ({ repo }) => {
     if (!context) {
         throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
-
     const navigate = useNavigate();
     return (
         <div

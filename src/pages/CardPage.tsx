@@ -1,30 +1,35 @@
 import { useNavigate, useParams } from "react-router";
-import { useContext } from "react";
-import { AuthorizationContext } from "../context/AuthorizationContext";
 import { Button } from "../components/Button";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoIosStar, IoMdCode } from "react-icons/io";
 import { CiCalendar } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import { AuthorizationContext, type repoDataType } from "../context/AuthorizationContext";
+import { useContext } from "react";
 
 export function CardPage() {
     const params = useParams();
     const id = Number(params.id);
-
+    const navigate = useNavigate();
     const context = useContext(AuthorizationContext);
 
     if (!context) {
         throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
 
-    console.log(id);
+    const { searchItem, fetchRepos } = context;
 
-    const { reposArray } = context;
+    const { data } = useQuery<repoDataType[] | undefined>({
+        queryFn: () => fetchRepos(searchItem),
+        queryKey: ["repos", searchItem],
+        enabled: false,
+    });
+    if (!data) {
+        return [];
+    }
+    const currentRepo = data.find((i) => i.id === id);
 
-    const currentRepo = reposArray.find((i) => i.id === id);
-    console.log(currentRepo);
-
-    const navigate = useNavigate();
     return (
         <div className="mx-auto w-[70%]">
             <Button onClick={() => navigate("/")}>
@@ -77,11 +82,11 @@ export function CardPage() {
                         <div className="w-[50%]">
                             <h4 className="text-2xl font-bold text-gray-400">Topics</h4>
                             <div className="flex flex-wrap gap-5">
-                                {currentRepo?.topics.map((item) => {
+                                {currentRepo?.topics.map((item, index) => {
                                     if (currentRepo.topics.length) {
-                                        return <p>{item}</p>;
+                                        return <p key={index}>{item}</p>;
                                     } else {
-                                        return <p>No topics added</p>;
+                                        return <p key={index}>No topics added</p>;
                                     }
                                 })}
                             </div>
