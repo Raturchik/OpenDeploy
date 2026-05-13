@@ -19,7 +19,7 @@ export const HomePage = () => {
         throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
 
-    const { fetchPopularRepo, searchItem, setSearchItem, fetchRepos } = context;
+    const { fetchPopularRepo, searchItem, setSearchItem, fetchRepos, setSeacrhBy } = context;
 
     const {
         register,
@@ -54,10 +54,15 @@ export const HomePage = () => {
         <main className="mx-auto">
             <div className="flex flex-row gap-1.5 items-center justify-between w-[90%] mx-auto mb-7.5">
                 <div className="flex items-center rounded-xl">
-                    <select className="px-0.75 py-2.5 bg-white text-sm font-semibold rounded-4xl text-foreground outline-none">
-                        <option value="">Title</option>
-                        <option value="">Author</option>
-                        <option value="">Tag</option>
+                    <select
+                        className="px-0.75 py-2.5 bg-white text-sm font-semibold rounded-4xl text-foreground outline-none"
+                        onChange={(event) => {
+                            setSeacrhBy(event.target.value);
+                        }}
+                    >
+                        <option value="title">Title</option>
+                        <option value="author">Author</option>
+                        <option value="stack">Stack</option>
                     </select>
                 </div>
                 <form

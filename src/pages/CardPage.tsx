@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router";
 import { Button } from "../components/Button";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoIosStar, IoMdCode } from "react-icons/io";
@@ -20,13 +20,16 @@ export function CardPage() {
 
     const { searchItem, fetchRepos } = context;
 
-    const { data } = useQuery<repoDataType[] | undefined>({
+    const { data, isError, isLoading } = useQuery<repoDataType[] | undefined>({
         queryFn: () => fetchRepos(searchItem),
         queryKey: ["repos", searchItem],
         enabled: false,
     });
-    if (!data) {
-        return [];
+
+    if (isLoading) return <div>Загрузка...</div>;
+
+    if (!data || isError) {
+        return <Navigate to="/notfound" replace />;
     }
     const currentRepo = data.find((i) => i.id === id);
 

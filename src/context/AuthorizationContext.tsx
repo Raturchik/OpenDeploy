@@ -25,6 +25,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     const [error, setError] = useState("");
     const [isAuthReady, setIsAuthReady] = useState(false);
     const [searchItem, setSearchItem] = useState("");
+    const [searchBy, setSeacrhBy] = useState("title");
 
     const navigate = useNavigate();
 
@@ -121,7 +122,6 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
                     },
                 },
             );
-
             if (!response.ok) {
                 throw new Error(`Ошибка HTTP: ${response.status}`);
             }
@@ -150,7 +150,18 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     const fetchRepos = async (searchTerm: string): Promise<repoDataType[] | undefined> => {
         if (!searchTerm) return [];
 
-        const response = await fetch(`https://api.github.com/search/repositories?q=${searchTerm}`);
+        let fetchUrl: string = "";
+
+        if (searchBy === "title") {
+            fetchUrl = `https://api.github.com/search/repositories?q=${searchTerm}`;
+        }
+        if (searchBy === "author") {
+            fetchUrl = `https://api.github.com/search/repositories?q=user:${searchTerm}`;
+        }
+        if (searchBy === "stack") {
+            fetchUrl = `https://api.github.com/search/repositories?q=topic:${searchTerm}`;
+        }
+        const response = await fetch(fetchUrl);
 
         if (!response.ok) throw new Error("Ошибка при загрузке");
 
@@ -171,7 +182,9 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
             link: item.html_url,
         }));
     };
+
     const value = {
+        setSeacrhBy,
         searchItem,
         setSearchItem,
         error,

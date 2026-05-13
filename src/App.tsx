@@ -4,6 +4,7 @@ import { HomePage, AuthorisationPage, AddBuild } from "./pages";
 import { PrivateRoute } from "./layout/PrivateRoute";
 import { CardPage } from "./pages/CardPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import NotFound from "./pages/NotFound";
 
 const client = new QueryClient({});
 
@@ -16,6 +17,7 @@ const App = () => {
                         <Route element={<HomePage />} index />
                         <Route element={<AddBuild />} path="add" />
                         <Route element={<CardPage />} path="card/:id" />
+                        <Route element={<NotFound />} path="notfound" />
                     </Route>
                 </Route>
                 <Route element={<AuthorisationPage />} path="auth" />
