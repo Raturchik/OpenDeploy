@@ -34,7 +34,7 @@ export function CardPage() {
     const currentRepo = data.find((i) => i.id === id);
 
     return (
-        <div className="mx-auto w-[70%]">
+        <div className="mx-auto w-[70%] grow">
             <Button onClick={() => navigate("/")}>
                 <FaArrowLeftLong />
                 Back to builds
@@ -85,13 +85,13 @@ export function CardPage() {
                         <div className="w-[50%]">
                             <h4 className="text-2xl font-bold text-gray-400">Topics</h4>
                             <div className="flex flex-wrap gap-5">
-                                {currentRepo?.topics.map((item, index) => {
-                                    if (currentRepo.topics.length) {
+                                {currentRepo?.topics.length === 0 ? (
+                                    <p>No topics added</p>
+                                ) : (
+                                    currentRepo?.topics.map((item, index) => {
                                         return <p key={index}>{item}</p>;
-                                    } else {
-                                        return <p key={index}>No topics added</p>;
-                                    }
-                                })}
+                                    })
+                                )}
                             </div>
                         </div>
                         <div className="">

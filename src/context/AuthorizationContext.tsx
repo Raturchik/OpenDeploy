@@ -184,6 +184,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     };
 
     const value = {
+        searchBy,
         setSeacrhBy,
         searchItem,
         setSearchItem,

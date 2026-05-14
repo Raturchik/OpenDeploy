@@ -38,6 +38,7 @@ export interface GitHubRepoItem {
     id: number;
 }
 interface AppContextType {
+    searchBy: string;
     setSeacrhBy: (value: string) => void;
     searchItem: string;
     setSearchItem: (value: string) => void;

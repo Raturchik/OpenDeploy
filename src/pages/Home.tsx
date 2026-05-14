@@ -19,7 +19,8 @@ export const HomePage = () => {
         throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
 
-    const { fetchPopularRepo, searchItem, setSearchItem, fetchRepos, setSeacrhBy } = context;
+    const { fetchPopularRepo, searchItem, setSearchItem, fetchRepos, setSeacrhBy, searchBy } =
+        context;
 
     const {
         register,
@@ -37,7 +38,7 @@ export const HomePage = () => {
         }
     };
 
-    const { data } = useQuery<repoDataType[]>({
+    const { data, isLoading } = useQuery<repoDataType[]>({
         queryKey: ["repos", searchItem],
         queryFn: getRepos,
         staleTime: 1000 * 60 * 5,
@@ -51,7 +52,7 @@ export const HomePage = () => {
     console.log(data);
 
     return (
-        <main className="mx-auto">
+        <main className="grow">
             <div className="flex flex-row gap-1.5 items-center justify-between w-[90%] mx-auto mb-7.5">
                 <div className="flex items-center rounded-xl">
                     <select
@@ -76,7 +77,7 @@ export const HomePage = () => {
                         className="bg-transparent text-sm outline-none w-full placeholder:text-muted-foreground focus:outline-none px-2"
                         id=""
                         type="text"
-                        placeholder="Search by..."
+                        placeholder={`Search by ${searchBy}`}
                         {...register("formData", { required: true })}
                     />
                     {!errors ? "Something wrong..." : ""}
@@ -100,6 +101,13 @@ export const HomePage = () => {
             </div>
 
             <div className="container mx-auto grid gap-5 max-w-[90%] md:grid-cols-2 lg:grid-cols-3">
+                {isLoading && (
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex">
+                        <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse0_1s_infinite]"></div>
+                        <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse1_1s_infinite]"></div>
+                        <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse2_1s_infinite]"></div>
+                    </div>
+                )}
                 {data?.map((item) => {
                     return <Card repo={item} key={item.id} />;
                 })}
