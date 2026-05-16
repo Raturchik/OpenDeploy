@@ -69,6 +69,7 @@ export function CardPage() {
                         <Button
                             href={currentRepo?.link || "#"}
                             className="bg-[rgb(51,204,107)] px-4"
+                            target="_blank"
                         >
                             <IoMdCode /> <span>Code</span>
                         </Button>
@@ -94,7 +95,7 @@ export function CardPage() {
                                 )}
                             </div>
                         </div>
-                        <div className="">
+                        <div className="flex flex-col">
                             <h4 className="text-2xl font-bold text-gray-400">Tech stack</h4>
                             <p>
                                 {currentRepo?.language

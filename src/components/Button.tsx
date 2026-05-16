@@ -7,14 +7,15 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     href?: string;
     onClick?: () => void;
     className?: string;
+    target?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, href, onClick, className }) => {
+export const Button: React.FC<ButtonProps> = ({ children, href, onClick, className, target }) => {
     const basicButtonStyle =
         "px-3.75 py-1.75 flex items-center gap-1.5 rounded-4xl bg-secondary text-xs font-bold text-secondary-foreground transition-all hover:shadow-md cursor-pointer";
 
     return href ? (
-        <Link to={href} className={twMerge(basicButtonStyle, className)}>
+        <Link to={href} target={target} className={twMerge(basicButtonStyle, className)}>
             {children}
         </Link>
     ) : (

@@ -46,7 +46,11 @@ export const Card: React.FC<CardProps> = ({ repo }) => {
                             <p>{repo.userName}</p>
                         </a>
                         <div className="flex gap-2.5">
-                            <Button href={repo.link || "#"} className="bg-[rgb(51,204,107)] px-4">
+                            <Button
+                                href={repo.link || "#"}
+                                target="_blank"
+                                className="bg-[rgb(51,204,107)] px-4"
+                            >
                                 <IoMdCode /> <span>Code</span>
                             </Button>
                             {/* <Button href="#1" className="bg-[rgb(28,167,233)] px-2">
