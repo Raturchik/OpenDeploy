@@ -7,6 +7,8 @@ export type AuthCredentials = {
     username: string;
     copyPassword: string;
 };
+export type SortType = "stars" | "recent" | "active" | "license" | "wiki" | "user" | "organization";
+
 export type repoDataType = {
     id: number;
     name: string;
@@ -20,6 +22,10 @@ export type repoDataType = {
     stars: number;
     views: number;
     topics: string[];
+    last_update: string;
+    license: object;
+    owner: string;
+    wiki: boolean;
 };
 export interface GitHubRepoItem {
     name: string;
@@ -28,6 +34,7 @@ export interface GitHubRepoItem {
         avatar_url: string;
         login: string;
         html_url: string;
+        type: string;
     };
     created_at: string;
     topics: string[];
@@ -36,8 +43,21 @@ export interface GitHubRepoItem {
     language: string | null;
     html_url: string;
     id: number;
+    pushed_at: string;
+    has_wiki: boolean;
+    license?: {
+        key: string;
+        name: string;
+        node_id: string;
+        spdx_id: string;
+        url: string;
+    };
 }
 interface AppContextType {
+    filter: SortType[];
+    setFilter: React.Dispatch<React.SetStateAction<SortType[]>>;
+    isActive: boolean;
+    setIsActive: (value: boolean) => void;
     searchBy: string;
     setSeacrhBy: (value: string) => void;
     searchItem: string;

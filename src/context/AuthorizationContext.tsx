@@ -4,6 +4,7 @@ import {
     type AuthCredentials,
     type GitHubRepoItem,
     type repoDataType,
+    type SortType,
 } from "./AuthorizationContext";
 import {
     createUserWithEmailAndPassword,
@@ -26,6 +27,8 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
     const [isAuthReady, setIsAuthReady] = useState(false);
     const [searchItem, setSearchItem] = useState("");
     const [searchBy, setSeacrhBy] = useState("title");
+    const [isActive, setIsActive] = useState(false);
+    const [filter, setFilter] = useState<SortType[]>([]);
 
     const navigate = useNavigate();
 
@@ -117,7 +120,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
                 "https://api.github.com/search/repositories?q=stars:>1&sort=stars&order=desc&per_page=10",
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, //<- insert token here later
+                        Authorization: `Bearer ${token}`,
                         Accept: "application/vnd.github+json",
                     },
                 },
@@ -126,7 +129,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
                 throw new Error(`Ошибка HTTP: ${response.status}`);
             }
             const data = await response.json();
-
+            console.log(data);
             return data.items.map((item: GitHubRepoItem) => ({
                 id: item.id,
                 name: item.name,
@@ -140,6 +143,10 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
                 topics: item.topics,
                 language: item.language,
                 link: item.html_url,
+                last_update: item.pushed_at,
+                license: item.license,
+                owner: item.owner.type,
+                wiki: item.has_wiki,
             }));
         } catch (err) {
             console.error(err);
@@ -166,6 +173,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
         if (!response.ok) throw new Error("Ошибка при загрузке");
 
         const data = await response.json();
+        console.log(data);
 
         return data.items.map((item: GitHubRepoItem) => ({
             id: item.id,
@@ -180,10 +188,18 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
             topics: item.topics,
             language: item.language,
             link: item.html_url,
+            last_update: item.pushed_at,
+            license: item.license,
+            owner: item.owner.type,
+            wiki: item.has_wiki,
         }));
     };
 
     const value = {
+        filter,
+        setFilter,
+        isActive,
+        setIsActive,
         searchBy,
         setSeacrhBy,
         searchItem,
