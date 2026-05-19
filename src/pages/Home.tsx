@@ -73,16 +73,14 @@ export const HomePage = () => {
                 return prev.map((item) => (item === "organization" ? "user" : item));
             }
 
-            // 2. Если кликнули на "organization" и при этом активен "user" -> меняем "user" на "organization"
             if (value === "organization" && prev.includes("user")) {
                 return prev.map((item) => (item === "user" ? "organization" : item));
             }
 
-            // 3. Стандартная логика для всех остальных чекбоксов
             if (prev.includes(value)) {
-                return prev.filter((item) => item !== value); // удаляем, если уже был
+                return prev.filter((item) => item !== value);
             } else {
-                return [...prev, value]; // добавляем, если не было
+                return [...prev, value];
             }
         });
     };
@@ -92,8 +90,6 @@ export const HomePage = () => {
         date.setMonth(date.getMonth() - 4);
         return date;
     };
-    //organisation || user???
-    // has_wiki???
 
     const filteredData = data?.filter((data) => {
         if (filter.length === 0) {
@@ -122,9 +118,6 @@ export const HomePage = () => {
         }
     });
 
-    console.log(filteredData);
-    console.log(filter);
-
     return (
         <main className="grow">
             <div className="flex flex-row gap-1.5 items-center justify-between w-[90%] mx-auto mb-7.5">
@@ -144,7 +137,7 @@ export const HomePage = () => {
                     onSubmit={handleSubmit(onSubmit)}
                     className="bg-white flex flex-1 items-center gap-1 rounded-3xl px-0.5 py-2.5"
                 >
-                    <Button className="p-0" type="submit">
+                    <Button className="p-0 hover:shadow-none" type="submit">
                         <LuSearch className="ml-1 xs:mx-2" size={14} />
                     </Button>
                     <input
@@ -265,18 +258,32 @@ export const HomePage = () => {
                 </Button>
             </div>
 
-            <div className="container mx-auto grid gap-5 max-w-[90%] md:grid-cols-2 lg:grid-cols-3">
-                {isLoading && (
+            {data === undefined ? (
+                isLoading && (
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex">
                         <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse0_1s_infinite]"></div>
                         <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse1_1s_infinite]"></div>
                         <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse2_1s_infinite]"></div>
                     </div>
-                )}
-                {filteredData?.map((item) => {
-                    return <Card repo={item} key={item.id} />;
-                })}
-            </div>
+                )
+            ) : filteredData && filteredData.length > 0 ? (
+                <div
+                    className={twMerge(
+                        "container mx-auto grid gap-5 max-w-[90%] md:grid-cols-2 lg:grid-cols-3",
+                        data === undefined ? "grid-cols-1" : "",
+                    )}
+                >
+                    {filteredData.map((item) => (
+                        <Card repo={item} key={item.id} />
+                    ))}
+                </div>
+            ) : (
+                <div className="bg-white mx-auto max-w-70 sm:max-w-md lg:max-w-2xl rounded-2xl p-6 text-center sm:mt-12 sm:p-8">
+                    <p className="text-base font-bold text-muted-foreground sm:text-lg lg:text-2xl">
+                        No projects found
+                    </p>
+                </div>
+            )}
         </main>
     );
 };

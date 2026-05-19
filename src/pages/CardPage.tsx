@@ -26,7 +26,14 @@ export function CardPage() {
         enabled: false,
     });
 
-    if (isLoading) return <div>Загрузка...</div>;
+    if (isLoading)
+        return (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex">
+                <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse0_1s_infinite]"></div>
+                <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse1_1s_infinite]"></div>
+                <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse2_1s_infinite]"></div>
+            </div>
+        );
 
     if (!data || isError) {
         return <Navigate to="/notfound" replace />;
@@ -35,7 +42,7 @@ export function CardPage() {
 
     return (
         <div className="mx-auto w-[70%] grow">
-            <Button onClick={() => navigate("/")}>
+            <Button onClick={() => navigate("/")} className="hover:shadow-none">
                 <FaArrowLeftLong />
                 Back to builds
             </Button>
@@ -44,12 +51,18 @@ export function CardPage() {
                     <h1 className="text-2xl font-extrabold sm:text-3xl">{currentRepo?.name}</h1>
                     <div className=" flex flex-wrap  gap-3 text-xs font-semibold ">
                         <div className="flex gap-2 items-center">
-                            <img
-                                src={currentRepo?.avatar}
-                                alt=""
-                                className="h-6 w-6 rounded-full"
-                            />
-                            <p>{currentRepo?.userName}</p>
+                            <a
+                                href={currentRepo?.userLink}
+                                target={"_blank"}
+                                className="flex items-center gap-2"
+                            >
+                                <img
+                                    src={currentRepo?.avatar}
+                                    alt=""
+                                    className="h-6 w-6 rounded-full"
+                                />
+                                {currentRepo?.userName}
+                            </a>
                         </div>
                         <span className="flex items-center gap-2">
                             <IoIosStar color="orange" className="h-6 w-6" />

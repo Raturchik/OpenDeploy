@@ -3,6 +3,7 @@ import { Button } from "./Button";
 import { useContext } from "react";
 import { AuthorizationContext, type repoDataType } from "../context/AuthorizationContext";
 import { useNavigate } from "react-router";
+import { FiExternalLink } from "react-icons/fi";
 
 interface CardProps {
     repo: repoDataType;
@@ -13,6 +14,16 @@ export const Card: React.FC<CardProps> = ({ repo }) => {
     if (!context) {
         throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
+
+    const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+
+        if (!repo.deploy) {
+            event.preventDefault();
+            alert("No deploy added");
+        }
+    };
+
     const navigate = useNavigate();
     return (
         <div
@@ -49,13 +60,18 @@ export const Card: React.FC<CardProps> = ({ repo }) => {
                             <Button
                                 href={repo.link || "#"}
                                 target="_blank"
-                                className="bg-[rgb(51,204,107)] px-4"
+                                className="bg-[rgb(51,204,107)] sm:px-4"
                             >
                                 <IoMdCode /> <span>Code</span>
                             </Button>
-                            {/* <Button href="#1" className="bg-[rgb(28,167,233)] px-2">
+                            <Button
+                                href={repo.deploy}
+                                target="_blank"
+                                onClick={handleButtonClick}
+                                className="bg-[rgb(28,167,233)] sm:px-4"
+                            >
                                 <FiExternalLink /> <span>Live</span>
-                            </Button> */}
+                            </Button>
                         </div>
                     </div>
                 </div>

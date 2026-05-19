@@ -56,7 +56,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
                 navigate("/");
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
                 setError("Unexpected error ocured");
             });
     }
@@ -73,7 +73,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
                 navigate("/");
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
                 setError("Unexpected error ocured");
             });
     }
@@ -129,7 +129,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
                 throw new Error(`Ошибка HTTP: ${response.status}`);
             }
             const data = await response.json();
-            console.log(data);
+
             return data.items.map((item: GitHubRepoItem) => ({
                 id: item.id,
                 name: item.name,
@@ -147,6 +147,7 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
                 license: item.license,
                 owner: item.owner.type,
                 wiki: item.has_wiki,
+                deploy: item.homepage,
             }));
         } catch (err) {
             console.error(err);
@@ -173,7 +174,6 @@ export function AuthorizationContextProvider({ children }: AppContextProps) {
         if (!response.ok) throw new Error("Ошибка при загрузке");
 
         const data = await response.json();
-        console.log(data);
 
         return data.items.map((item: GitHubRepoItem) => ({
             id: item.id,

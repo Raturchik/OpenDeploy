@@ -26,6 +26,7 @@ export type repoDataType = {
     license: object;
     owner: string;
     wiki: boolean;
+    deploy: string;
 };
 export interface GitHubRepoItem {
     name: string;
@@ -52,6 +53,7 @@ export interface GitHubRepoItem {
         spdx_id: string;
         url: string;
     };
+    homepage: string;
 }
 interface AppContextType {
     filter: SortType[];

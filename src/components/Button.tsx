@@ -3,9 +3,8 @@ import { Link } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     href?: string;
-    onClick?: () => void;
     className?: string;
     target?: string;
 }

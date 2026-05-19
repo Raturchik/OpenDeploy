@@ -13,7 +13,11 @@ export const PrivateRoute = () => {
     if (!isAuthReady) {
         return (
             <main className="mx-auto w-[90%] h-[calc(100vh-200px)] flex items-center justify-center">
-                <p>Loading...</p>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex">
+                    <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse0_1s_infinite]"></div>
+                    <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse1_1s_infinite]"></div>
+                    <div className="h-7.5 w-7.5 bg-[#ffffff] rounded-full m-3.75 animate-[pulse2_1s_infinite]"></div>
+                </div>
             </main>
         );
     }

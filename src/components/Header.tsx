@@ -1,5 +1,4 @@
 import { IoEnterOutline } from "react-icons/io5";
-// import { GiHamburgerMenu } from "react-icons/gi";
 import { Button } from "./Button";
 import { IoIosLogOut } from "react-icons/io";
 import { useContext } from "react";
@@ -16,7 +15,7 @@ export const Header = () => {
 
     return (
         <header className="sticky top-0 z-50 w-full shadow-lg flex justify-between items-center bg-white rounded-b-2xl px-2 py-4 mb-7.5">
-            <Button href="/" className="">
+            <Button href="/" className="hover:shadow-none">
                 <span className="text-2xl font-black tracking-tight text-foreground xs:text-3xl md:text-4xl">
                     Open
                     <span className="text-[rgb(13,161,230)] sans-serif">Deploy</span>
@@ -24,11 +23,10 @@ export const Header = () => {
             </Button>
 
             <div className="flex items-center gap-3">
-                {/* width < 1024px <GiHamburgerMenu className="h-8 w-8" /> */}
                 {user ? (
                     <Button
                         onClick={logout}
-                        className="p-2.5 flex items-center gap-2 rounded-3xl text-sm font-bold text-primary-foreground"
+                        className="p-2.5 flex items-center gap-2 rounded-3xl text-sm font-bold text-primary-foreground hover:shadow-none"
                     >
                         <IoIosLogOut className="h-7 w-7" />
                         <p className="hidden text-xl sm:block">LogOut</p>
@@ -36,7 +34,7 @@ export const Header = () => {
                 ) : (
                     <Button
                         href="auth"
-                        className="p-2.5 flex items-center gap-2 rounded-3xl text-sm font-bold text-primary-foreground"
+                        className="p-2.5 flex items-center gap-2 rounded-3xl text-sm font-bold text-primary-foreground hover:shadow-none"
                     >
                         <IoEnterOutline className="h-7 w-7" />
                         <p className="hidden text-xl sm:block">Login</p>
