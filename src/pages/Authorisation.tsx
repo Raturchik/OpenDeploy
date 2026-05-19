@@ -4,21 +4,14 @@ import { Button } from "../components/Button";
 import { useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { AuthorizationContext } from "../context/AuthorizationContext";
-
-type FormData = {
-    email: string;
-    password: string;
-    username: string;
-    copyPassword: string;
-};
+import { AuthorizationContext, type AuthCredentials } from "../context/AuthorizationContext";
 
 export const AuthorisationPage = () => {
     const context = useContext(AuthorizationContext);
     const [isLogin, setIsLogin] = useState(true);
 
     if (!context) {
-        throw new Error("AuthorisationPage must be used within AppContextProvider");
+        throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
 
     const {
@@ -28,19 +21,19 @@ export const AuthorisationPage = () => {
         signInWithGoogle,
         signInWithGitHub,
     } = context;
+
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<FormData>();
+    } = useForm<AuthCredentials>();
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
+    const onSubmit: SubmitHandler<AuthCredentials> = (data) => {
         if (isLogin) {
             signInWithCredentials(data);
         } else {
             signUpWithCredentials(data);
         }
-        console.log(data);
     };
 
     return (

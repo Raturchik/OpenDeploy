@@ -1,4 +1,4 @@
-import { IoSunnyOutline, IoEnterOutline } from "react-icons/io5";
+import { IoEnterOutline } from "react-icons/io5";
 // import { GiHamburgerMenu } from "react-icons/gi";
 import { Button } from "./Button";
 import { IoIosLogOut } from "react-icons/io";
@@ -24,10 +24,6 @@ export const Header = () => {
             </Button>
 
             <div className="flex items-center gap-3">
-                <div className="flex items-center">
-                    <IoSunnyOutline className="h-6 w-6 cursor-pointer" />
-                </div>
-
                 {/* width < 1024px <GiHamburgerMenu className="h-8 w-8" /> */}
                 {user ? (
                     <Button

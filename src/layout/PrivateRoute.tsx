@@ -17,5 +17,6 @@ export const PrivateRoute = () => {
             </main>
         );
     }
-    return user?.uid ? <Outlet /> : <Navigate to="auth" replace />;
+
+    return user?.uid ? <Outlet /> : <Navigate to="/auth" replace />;
 };
