@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { AuthorizationContext, type AuthCredentials } from "../context/AuthorizationContext";
+import { Navigate } from "react-router";
 
 export const AuthorisationPage = () => {
     const context = useContext(AuthorizationContext);
@@ -13,7 +14,7 @@ export const AuthorisationPage = () => {
     if (!context) {
         throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
-
+    const { user } = context;
     const {
         signInWithCredentials,
         signUpWithCredentials,
@@ -36,11 +37,15 @@ export const AuthorisationPage = () => {
         }
     };
 
+    if (user?.uid) {
+        return <Navigate to="/home" replace />;
+    }
+
     return (
         <div className="grid h-screen place-items-center">
             <div className="flex flex-col mx-auto sm:w-[50%] md:w-[45%] lg:w-[40%] xl:w-[35%] 2xl:w-[30%]">
                 <Button
-                    href="/"
+                    href="home"
                     className="flex items-center gap-2 text-[rgb(98,115,132)] mb-5 outline-none"
                 >
                     <FaArrowLeft />

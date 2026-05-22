@@ -2,9 +2,13 @@ import type React from "react";
 import { Link } from "react-router";
 import { twMerge } from "tailwind-merge";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type AnchorAndButtonAttributes = React.ButtonHTMLAttributes<HTMLButtonElement> &
+    React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
+export interface ButtonProps extends Partial<AnchorAndButtonAttributes> {
     children?: React.ReactNode;
     href?: string;
+    onClick?: (event: React.MouseEvent<HTMLElement>) => void;
     className?: string;
     target?: string;
 }
@@ -14,7 +18,12 @@ export const Button: React.FC<ButtonProps> = ({ children, href, onClick, classNa
         "px-3.75 py-1.75 flex items-center gap-1.5 rounded-4xl bg-secondary text-xs font-bold text-secondary-foreground transition-all hover:shadow-md cursor-pointer";
 
     return href ? (
-        <Link to={href} target={target} className={twMerge(basicButtonStyle, className)}>
+        <Link
+            to={href}
+            target={target}
+            onClick={onClick}
+            className={twMerge(basicButtonStyle, className)}
+        >
             {children}
         </Link>
     ) : (

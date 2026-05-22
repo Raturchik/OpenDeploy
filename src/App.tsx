@@ -14,13 +14,13 @@ const App = () => {
             <Routes>
                 <Route element={<RootLayout />}>
                     <Route element={<PrivateRoute />} path="/">
-                        <Route element={<HomePage />} index />
+                        <Route element={<HomePage />} path="home" />
                         <Route element={<AddBuild />} path="add" />
                         <Route element={<CardPage />} path="card/:id" />
                         <Route element={<NotFound />} path="notfound" />
                     </Route>
                 </Route>
-                <Route element={<AuthorisationPage />} path="auth" />
+                <Route element={<AuthorisationPage />} index />
             </Routes>
         </QueryClientProvider>
     );

@@ -15,7 +15,7 @@ export const Header = () => {
 
     return (
         <header className="sticky top-0 z-50 w-full shadow-lg flex justify-between items-center bg-white rounded-b-2xl px-2 py-4 mb-7.5">
-            <Button href="/" className="hover:shadow-none">
+            <Button href="home" className="hover:shadow-none">
                 <span className="text-2xl font-black tracking-tight text-foreground xs:text-3xl md:text-4xl">
                     Open
                     <span className="text-[rgb(13,161,230)] sans-serif">Deploy</span>

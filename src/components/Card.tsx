@@ -15,7 +15,7 @@ export const Card: React.FC<CardProps> = ({ repo }) => {
         throw new Error("AuthorisationPage must be used within AuthorizationContextProvider");
     }
 
-    const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
 
         if (!repo.deploy) {
@@ -24,11 +24,15 @@ export const Card: React.FC<CardProps> = ({ repo }) => {
         }
     };
 
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+    };
+
     const navigate = useNavigate();
     return (
         <div
             className="h-full p-3.75 bg-white rounded-3xl shadow-sm transform transition-all duration-400 ease-in-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:cursor-pointer"
-            onClick={() => navigate(`card/${repo.id}`)}
+            onClick={() => navigate(`/card/${repo.id}`)}
         >
             <div className="flex flex-col gap-2 justify-between h-full">
                 <div className="flex flex-col">
@@ -46,8 +50,9 @@ export const Card: React.FC<CardProps> = ({ repo }) => {
                     <div className="flex justify-between mt-auto">
                         <a
                             href={repo.userLink}
-                            className="flex gap-3 text-sm items-center"
+                            className="flex gap-3 text-sm items-center "
                             target="_blank"
+                            onClick={handleClick}
                         >
                             <img
                                 src={repo.avatar || "#"}
@@ -58,8 +63,9 @@ export const Card: React.FC<CardProps> = ({ repo }) => {
                         </a>
                         <div className="flex gap-2.5">
                             <Button
-                                href={repo.link || "#"}
+                                href={repo.link || ""}
                                 target="_blank"
+                                onClick={handleClick}
                                 className="bg-[rgb(51,204,107)] sm:px-4"
                             >
                                 <IoMdCode /> <span>Code</span>
