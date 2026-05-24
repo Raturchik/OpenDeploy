@@ -42,7 +42,7 @@ export function CardPage() {
 
     return (
         <div className="mx-auto w-[70%] grow">
-            <Button onClick={() => navigate("/home")} className="hover:shadow-none">
+            <Button onClick={() => navigate("/")} className="hover:shadow-none">
                 <FaArrowLeftLong />
                 Back to builds
             </Button>
